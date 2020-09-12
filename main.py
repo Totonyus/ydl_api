@@ -1,6 +1,8 @@
 import logging
+import params
 
 from urllib.parse import urlparse
+
 from fastapi import BackgroundTasks, FastAPI, Request, Response
 
 import youtube_dl
@@ -26,22 +28,22 @@ def check_download(url):
 @app.get("/download")
 async def create_download(request: Request, response : Response, background_tasks:BackgroundTasks):
     url = request.query_params['url']
-    hostname = urlparse(url).hostname
 
-    ### Change here the download directory and the file name : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
-    download_dir = f""
-    filename = "%(title)s_(%(height)s).%(ext)s"
+    ydl_api_opts = {
+        'url': url,
+        'hostname' : urlparse(url).hostname
+    }
 
     ### Change here the default format to use : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#format-selection
     try:
       format = request.query_params['format']
     except:
-      format = "bestvideo+bestaudio/best"
+      format = params.default_format
 
     ydl_opts = {
         'quiet': True,
         'ignoreerrors' : True,
-        'outtmpl': download_dir + filename,
+        'outtmpl': params.download_dir(ydl_api_opts) + params.file_name_template(ydl_api_opts),
         'format': format
     }
 
@@ -56,4 +58,4 @@ async def create_download(request: Request, response : Response, background_task
       background_tasks.add_task(launch_download, url, ydl_opts)
       response.status_code = 200
 
-    return {'message' : message, 'url' : url, 'format': format, 'download_dir' : download_dir, 'status' : response.status_code}
+    return {'message' : message, 'url' : url, 'format': format, 'download_dir' : params.download_dir(ydl_api_opts), 'status' : response.status_code}

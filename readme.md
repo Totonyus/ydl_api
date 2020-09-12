@@ -15,8 +15,12 @@ This is my very first python program. I did my best. If you are an experienced p
 
 ### Dependancies
 This section is to complete.
-* `python3`
-* `fastapi`, `uvicorn`, `youtube-dl` 
+* Installation with distribution package manager (`apt`, `yum`, ...) : `python3`, `python3-pip`, `ffmpeg`
+* Installation with pip : `fastapi`, `uvicorn`, `youtube-dl`
+
+```
+pip3 install fastapi youtube-dl uvicorn
+``` 
 
 ### Installation
 #### Download this repo
