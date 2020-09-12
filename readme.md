@@ -83,3 +83,5 @@ Simple exemple of request to use anywhere you want
 ```
 GET : http://%HOST%:%PORT%/download?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ&format=best[height=720]/best
 ```
+### ios shortcut
+Find here the shortcut created to use with ydl_api : [https://www.icloud.com/shortcuts/9d7edd8b29c54da2a17f8af2c386ba1c](https://www.icloud.com/shortcuts/9d7edd8b29c54da2a17f8af2c386ba1c)

@@ -29,7 +29,7 @@ async def create_download(request: Request, response : Response, background_task
     hostname = urlparse(url).hostname
 
     ### Change here the download directory and the file name : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
-    download_dir = f"---%--- REPLACE ---%---/{hostname}/"
+    download_dir = f""
     filename = "%(title)s_(%(height)s).%(ext)s"
 
     ### Change here the default format to use : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#format-selection
@@ -56,4 +56,4 @@ async def create_download(request: Request, response : Response, background_task
       background_tasks.add_task(launch_download, url, ydl_opts)
       response.status_code = 200
 
-    return {'message' : message, 'url' : url, 'format': format, 'download_dir' : download_dir}
+    return {'message' : message, 'url' : url, 'format': format, 'download_dir' : download_dir, 'status' : response.status_code}

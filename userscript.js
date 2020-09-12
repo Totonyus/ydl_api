@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        youtube-dl-rest-api
+// @name        ydl_api
 // @include     *
 // @grant       GM_registerMenuCommand
 // @grant       GM_xmlhttpRequest
