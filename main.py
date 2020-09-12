@@ -1,13 +1,17 @@
-import logging
-import params
-
+import logging, params, youtube_dl
 from urllib.parse import urlparse
-
-from fastapi import BackgroundTasks, FastAPI, Request, Response
-
-import youtube_dl
+from fastapi import BackgroundTasks, FastAPI, Response
 
 app = FastAPI()
+
+### Verify if youtube-dl can find video
+def check_download(url):
+    ydl_opts = {
+        'listformats' : True
+    }
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
 
 ### Launch the download instruction
 def launch_download(url, ydl_opts):
@@ -16,35 +20,20 @@ def launch_download(url, ydl_opts):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
-### Verify if youtube-dl can find video
-def check_download(url):
-    ydl_opts = {
-      'listformats' : True
-    }
-
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-
 @app.get("/download")
-async def create_download(request: Request, response : Response, background_tasks:BackgroundTasks):
-    url = request.query_params['url']
-
+async def create_download(response : Response, background_tasks:BackgroundTasks,
+                          url: str, format: str = params.default_format):
+    # used to pass useful vars for naming purpose
     ydl_api_opts = {
         'url': url,
         'hostname' : urlparse(url).hostname
     }
 
-    ### Change here the default format to use : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#format-selection
-    try:
-      format = request.query_params['format']
-    except:
-      format = params.default_format
-
     ydl_opts = {
         'quiet': True,
         'ignoreerrors' : True,
         'outtmpl': params.download_dir(ydl_api_opts) + params.file_name_template(ydl_api_opts),
-        'format': format
+        'format': params.default_format
     }
 
     try:

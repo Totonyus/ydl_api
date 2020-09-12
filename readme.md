@@ -9,12 +9,12 @@ This is my very first python program. I did my best. If you are an experienced p
 ### Files
 * `readme.md`
 * `main.py` the main program
+* `params.py`
 * `launch.sh` a simple sh file to launch the server
 * `userscript.js` a javascript file you can import in [Greasemonkey (firefox)](https://addons.mozilla.org/fr/firefox/addon/greasemonkey/) or [Tampermonkey (chrome)](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=fr) to access the api from yout browser
 * `ydl_api.service` a systemd service file
 
 ### Dependancies
-This section is to complete.
 * Installation with distribution package manager (`apt`, `yum`, ...) : `python3`, `python3-pip`, `ffmpeg`
 * Installation with pip : `fastapi`, `uvicorn`, `youtube-dl`
 
@@ -28,7 +28,7 @@ Download this git repository using git command or download the zip with wget com
 
 #### Replace placeholders
 Placeholders looks like this : `---%--- REPLACE ---%---`
-* `main.py` : you must set the download dir
+* (Optional) `params.py` : you can change destination folder and the file name template
 * (Optional) `userscript.js` : you must set your host, you can also add format options as you want
 * (Optional) `launch.sh` : the default port is set arbitrarily to `5011`. Change it as you want.
 * (Optional) `ydl_api.service` : you must set the working directory to the directory you downloaded this application. If you don't want change default user and group, you can delete those lines :
