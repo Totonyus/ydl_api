@@ -16,7 +16,8 @@
         {name: 'Download (default)', key : 'd', host : default_host, params : {}},
         {name: 'Download (best)', key : 'b', host : default_host, params : { format: 'bestvideo+bestaudio/best'}},
         {name: 'Download (720p)', key : '7', host : default_host, params : { format: 'best[height=720]/best'}},
-        {name: 'Download (audio)', key : 'a', host : default_host, params : { format: 'bestaudio'}}
+        {name: 'Download (audio)', key : 'a', host : default_host, params : { format: 'bestaudio'}},
+        {name: 'Download (best, subtitles)', key : 's', host : default_host, params : { format: 'bestvideo+bestaudio/best', subtitles: 'en'}}, // multiple subtitles example :  'fr,en'
     ];
 
     const buildURL = function (preset) {

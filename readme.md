@@ -1,8 +1,10 @@
 # Simple youtube-dl rest API (ydl_api)
 
-### Exhaustive list of the ydl_api possibilities
+### Exhaustive list of the ydl_api features
 - Launch youtube-dl download directly on your server
-
+  - Choice your video format
+  - Download subtitles
+  
 ### Disclaimer
 This is my very first python program. I did my best. If you are an experienced python developer, you may not want to look at the source code. (I'm kidding, you're going to have to configure some things anyway).
 
@@ -28,7 +30,7 @@ Download this git repository using git command or download the zip with wget com
 
 #### Replace placeholders
 Placeholders looks like this : `---%--- REPLACE ---%---`
-* (Optional) `params.py` : you can change destination folder and the file name template
+* (Optional) `params.py` : you can change destination folder, file name template and a few others options
 * (Optional) `userscript.js` : you must set your host, you can also add format options as you want
 * (Optional) `launch.sh` : the default port is set arbitrarily to `5011`. Change it as you want.
 * (Optional) `ydl_api.service` : you must set the working directory to the directory you downloaded this application. If you don't want change default user and group, you can delete those lines :
@@ -82,10 +84,10 @@ You now should have access to download options on every sites.
 ![result.jpg](result.jpg)
 
 ### Use API
-Simple exemple of request to use anywhere you want
+Simple exemple of request to use anywhere you want :
 
 ```
-GET : http://%HOST%:%PORT%/download?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ&format=best[height=720]/best
+GET : http://%HOST%:%PORT%/download?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ&format=best[height=720]/best&subtitles="fr,en"
 ```
 ### ios shortcut
-Find here the shortcut created to use with ydl_api : [https://www.icloud.com/shortcuts/9d7edd8b29c54da2a17f8af2c386ba1c](https://www.icloud.com/shortcuts/9d7edd8b29c54da2a17f8af2c386ba1c)
+Find here the shortcut created to use with ydl_api : [https://www.icloud.com/shortcuts/0535d3ae2e8b4164a3bc7c3c8ce673e3](https://www.icloud.com/shortcuts/0535d3ae2e8b4164a3bc7c3c8ce673e3)
