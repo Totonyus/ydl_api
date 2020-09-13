@@ -23,8 +23,8 @@ def launch_download(url, ydl_opts):
         ydl.download([url])
 
 @app.get("/download")
-async def create_download(response : Response, background_tasks:BackgroundTasks,
-                          url: str, format: str = params.default_format, subtitles : str = params.default_subtitles_languages):
+async def create_download(response : Response, background_tasks : BackgroundTasks, url: str,
+                          format: str = params.default_format, subtitles : str = params.default_subtitles_languages, location: str = "default"):
 
     decoded_url = unquote(url)
     decoded_format = unquote(format)
@@ -33,13 +33,16 @@ async def create_download(response : Response, background_tasks:BackgroundTasks,
     # used to pass useful vars for naming purpose
     ydl_api_opts = {
         'url': decoded_url,
-        'hostname' : urlparse(decoded_url).hostname
+        'hostname' : urlparse(decoded_url).hostname,
+        'location_identifier' : location
     }
+
+    download_dir = params.download_dir(ydl_api_opts)
 
     ydl_opts = {
         'quiet': True,
         'ignoreerrors' : True,
-        'outtmpl': params.download_dir(ydl_api_opts) + params.file_name_template(ydl_api_opts),
+        'outtmpl': download_dir + params.file_name_template(ydl_api_opts),
         'format': decoded_format,
         'writesubtitles': subtitles is not None,
         'subtitleslangs' : decoded_subtitles,
@@ -57,4 +60,4 @@ async def create_download(response : Response, background_tasks:BackgroundTasks,
       background_tasks.add_task(launch_download, decoded_url, ydl_opts)
       response.status_code = 200
 
-    return {'message' : message, 'url' : decoded_url, 'format': decoded_format, 'download_dir' : params.download_dir(ydl_api_opts), 'status' : response.status_code, 'subtitles' : decoded_subtitles}
+    return {'message' : message, 'url' : decoded_url, 'format': decoded_format, 'download_dir' : download_dir, 'status' : response.status_code, 'subtitles' : decoded_subtitles}

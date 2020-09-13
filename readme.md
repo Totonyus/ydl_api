@@ -87,7 +87,16 @@ You now should have access to download options on every sites.
 Simple exemple of request to use anywhere you want :
 
 ```
-GET : http://%HOST%:%PORT%/download?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ&format=best[height=720]/best&subtitles="fr,en"
+GET : http://%HOST%:%PORT%/download?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ&format=best[height=720]/best&subtitles=fr,en&location=date
 ```
+
+Parameters :
+* `url` : the page to download
+* (optional) `format` : the format of the video you want, if not provided, default value = `params.default_format`. TODO : verify in the API if the format is correct
+* (optional) `subtitles` : the list of subtitles you want to download. Can not download generated subtitles. If not provided, default value = `params.default_subtitles_languages`
+* (optional) `location` : the identifier of the location you want to use. Set in `params.download_dir`. If not provided, default value = `default`
+
 ### ios shortcut
-Find here the shortcut created to use with ydl_api : [https://www.icloud.com/shortcuts/0535d3ae2e8b4164a3bc7c3c8ce673e3](https://www.icloud.com/shortcuts/0535d3ae2e8b4164a3bc7c3c8ce673e3)
+Find here the shortcut created to use with ydl_api : [https://www.icloud.com/shortcuts/c32b881b80444110a4edd34c2367cc72](https://www.icloud.com/shortcuts/c32b881b80444110a4edd34c2367cc72)
+
+Only the `url` is provided to the api. All other fields uses default values of the server.

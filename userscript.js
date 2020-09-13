@@ -12,6 +12,7 @@
     // ---%--- REPLACE ---%--- your host here
     const default_host = 'http://127.0.0.1:5011/download';
 
+    // possible parameters : 'format', 'subtitles', 'location'
     const preset_list = [
         {name: 'Download (default)', key : 'd', host : default_host, params : {}},
         {name: 'Download (best)', key : 'b', host : default_host, params : { format: 'bestvideo+bestaudio/best'}},
