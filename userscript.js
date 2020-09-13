@@ -37,15 +37,15 @@
         GM_xmlhttpRequest({
             method: 'GET',
             url: buildURL(preset),
-            onerror: function (response) {
+            onerror: function () {
                 GM_notification('Host seams unreachable, is the server up ?', 'Download failed');
             },
             onload: function (response) {
                 const jsonResponse = JSON.parse(response.response);
                 if (response.status === 200) {
-                    GM_notification(`'${jsonResponse.url}' is downloading in '${jsonResponse.download_dir}'`, 'Download launched');
+                    GM_notification(`'Downloading in '${jsonResponse.download_dir}'`, 'Download launched');
                 } else {
-                    GM_notification(`Impossible to download '${jsonResponse.url}'`, 'Download failed');
+                    GM_notification(`The format may be wrong or not available or there is no video to download`, 'Download failed');
                 }
             }
         });
