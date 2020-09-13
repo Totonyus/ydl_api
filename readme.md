@@ -1,6 +1,6 @@
-# Simple-youtube-dl-Rest-api
+# Simple youtube-dl rest API (ydl_api)
 
-### Exhaustive list of the Simple-youtube-dl-Rest-api possibilities
+### Exhaustive list of the ydl_api possibilities
 - Launch youtube-dl download directly on your server
 
 ### Disclaimer

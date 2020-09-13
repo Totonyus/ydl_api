@@ -1,5 +1,5 @@
 import logging, params, youtube_dl
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
 from fastapi import BackgroundTasks, FastAPI, Response
 
 app = FastAPI()
@@ -7,6 +7,7 @@ app = FastAPI()
 ### Verify if youtube-dl can find video
 def check_download(url):
     ydl_opts = {
+        'quiet': params.hide_format_list_in_logs,
         'listformats' : True
     }
 
@@ -23,28 +24,32 @@ def launch_download(url, ydl_opts):
 @app.get("/download")
 async def create_download(response : Response, background_tasks:BackgroundTasks,
                           url: str, format: str = params.default_format):
+
+    decoded_url = unquote(url)
+    decoded_format = unquote(format)
+
     # used to pass useful vars for naming purpose
     ydl_api_opts = {
-        'url': url,
-        'hostname' : urlparse(url).hostname
+        'url': decoded_url,
+        'hostname' : urlparse(decoded_url).hostname
     }
 
     ydl_opts = {
         'quiet': True,
         'ignoreerrors' : True,
         'outtmpl': params.download_dir(ydl_api_opts) + params.file_name_template(ydl_api_opts),
-        'format': params.default_format
+        'format': decoded_format
     }
 
     try:
       check_download(url)
     except:
       message = "Impossible to download"
-      logging.error(f"Impossible to download '{url}'")
+      logging.error(f"Impossible to download '{decoded_url}'")
       response.status_code = 404
     else:
       message = "Download launched"
-      background_tasks.add_task(launch_download, url, ydl_opts)
+      background_tasks.add_task(launch_download, decoded_url, ydl_opts)
       response.status_code = 200
 
-    return {'message' : message, 'url' : url, 'format': format, 'download_dir' : params.download_dir(ydl_api_opts), 'status' : response.status_code}
+    return {'message' : message, 'url' : decoded_url, 'format': decoded_format, 'download_dir' : params.download_dir(ydl_api_opts), 'status' : response.status_code}

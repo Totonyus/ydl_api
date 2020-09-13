@@ -9,27 +9,47 @@
 (function() {
     'use strict';
 
-    const launchRequest = function(format){
-        GM_xmlhttpRequest ( {
-            method:     'GET',
-            url:        `http://---%--- REPLACE ---%---/download?url=${window.location.href}&${format}`,
-            onerror:    function (){
+    // ---%--- REPLACE ---%--- your host here
+    const default_host = 'http://127.0.0.1:5011/download';
+
+    const preset_list = [
+        {name: 'Download (default)', key : 'd', host : default_host, params : {}},
+        {name: 'Download (best)', key : 'b', host : default_host, params : { format: 'bestvideo+bestaudio/best'}},
+        {name: 'Download (720p)', key : '7', host : default_host, params : { format: 'best[height=720]/best'}},
+        {name: 'Download (audio)', key : 'a', host : default_host, params : { format: 'bestaudio'}}
+    ];
+
+    const buildURL = function (preset) {
+        const url = new URL(preset.host);
+
+        url.searchParams.append('url', window.location.href);
+
+        Object.entries(preset.params).forEach(([key, value]) => {
+            url.searchParams.append(key, value);
+        });
+
+        return url.href;
+    };
+
+    const launchRequest = function (preset) {
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: buildURL(preset),
+            onerror: function (response) {
                 GM_notification('Host seams unreachable, is the server up ?', 'Download failed');
             },
-            onload:     function (response) {
+            onload: function (response) {
                 const jsonResponse = JSON.parse(response.response);
-
-                if(response.status === 200){
+                if (response.status === 200) {
                     GM_notification(`'${jsonResponse.url}' is downloading in '${jsonResponse.download_dir}'`, 'Download launched');
-                }else{
+                } else {
                     GM_notification(`Impossible to download '${jsonResponse.url}'`, 'Download failed');
                 }
             }
         });
     };
 
-    // Add every format you want !
-    GM_registerMenuCommand("Download (default)", ()=>{launchRequest("")}, "d");
-    GM_registerMenuCommand("Download (best)", ()=>{launchRequest("format=bestvideo%2Bbestaudio/best")}, "b"); //replace + with %2B
-    GM_registerMenuCommand("Download (720p)", ()=>{launchRequest("format=best[height=720]/best")}, "7");
+    preset_list.forEach((preset)=>{
+        GM_registerMenuCommand(preset.name, ()=>{launchRequest(preset)}, preset.key);
+    })
 })();
