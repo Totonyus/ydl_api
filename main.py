@@ -16,14 +16,14 @@ def is_video(url):
         if url.find(entry) != -1: return True
     return False
 
-def must_be_checked(url):
+def must_be_checked(url, no_playlist = params.no_playlist):
     is_a_playlist = is_playlist(url)
     is_a_video = is_video(url)
 
     # To avoid failing a test for ONE video impossible to download in the entire playlist
-    if is_a_video and ((not is_a_playlist) or (is_a_playlist and params.no_playlist)) :
+    if is_a_video and ((not is_a_playlist) or (is_a_playlist and no_playlist)) :
         return True
-    elif is_a_playlist and ((not is_a_video) or (is_a_video and not params.no_playlist)):
+    elif is_a_playlist and ((not is_a_video) or (is_a_video and not no_playlist)):
         return False
     else: #In other cases : checking
         return True
