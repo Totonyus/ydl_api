@@ -38,4 +38,3 @@ def download_dir(ydl_api_opts):
         location = locations.get('default')
 
     return location
-

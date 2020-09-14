@@ -44,6 +44,8 @@
                 const jsonResponse = JSON.parse(response.response);
                 if (response.status === 200) {
                     GM_notification(`Downloading in '${jsonResponse.download_dir}'`, 'Download launched');
+                } else if(response.status === 202){
+                    GM_notification(`The download have not been checked. Some files may be not downloaded. Downloading in '${jsonResponse.download_dir}'`, 'Download launched');
                 } else {
                     GM_notification(`The format may be wrong or not available or there is no video to download`, 'Download failed');
                 }

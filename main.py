@@ -46,12 +46,12 @@ def check_download(url, format):
             if must_be_checked(url):
                 logging.info("Checking download")
                 ydl.download([url])
+                return {'checked' : True, 'errors' : False}
             else:
                 logging.warning("Unable to check download")
+                return {'checked' : False, 'errors' : False}
         except:
-            return False
-        else:
-            return True
+            return {'checked' : True, 'errors' : True}
 
 ### Launch the download instruction
 def launch_download(url, ydl_opts):
@@ -87,11 +87,16 @@ async def create_download(response : Response, background_tasks : BackgroundTask
         'subtitlesformat': params.default_subtitles_format
     }
 
-    if check_download(url, decoded_format):
-        background_tasks.add_task(launch_download, decoded_url, ydl_opts)
+    checked_download = check_download(url, decoded_format)
+
+    if checked_download['checked'] is False:
+        # background_tasks.add_task(launch_download, decoded_url, ydl_opts)
+        response.status_code = 202
+    elif checked_download['checked'] and checked_download['errors'] is False:
+        # background_tasks.add_task(launch_download, decoded_url, ydl_opts)
         response.status_code = 200
     else:
         logging.error(f"Impossible to download '{decoded_url}'")
         response.status_code = 400
 
-    return {'url' : decoded_url, 'format': decoded_format, 'download_dir' : download_dir, 'status' : response.status_code, 'subtitles' : decoded_subtitles}
+    return {'url' : decoded_url, 'format': decoded_format, 'download_dir' : download_dir, 'status' : response.status_code, 'subtitles' : decoded_subtitles, 'checked_download' : checked_download}
