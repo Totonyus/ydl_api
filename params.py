@@ -14,9 +14,9 @@ default_subtitles_format = "srt"
 no_playlist = True
 
 ### if present in url, the url is a playlist.
-### WARNING : can be hasardous, mostly set for youtube, avoid modify this
-playlist_indicators = ['?list=', '&list=']
-video_indicators = ['/watch?']
+playlist_detection = [
+    {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=']}, #preset for youtube
+]
 
 ### Change here the download directory and the file name : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
 # provided vars

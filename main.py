@@ -4,21 +4,25 @@ from fastapi import BackgroundTasks, FastAPI, Response
 
 app = FastAPI()
 
-#find if url is a playlist, playlists can't be secured by the check_download function
-def is_playlist(url):
-    for entry in params.playlist_indicators:
-        if url.find(entry) != -1: return True
-    return False
+# used to define if the url is a video, un playlist or a video in a playlist
+def define_properties(url):
+    properties = {"playlist" : False, "video" : False} # set at the beginning in case params.playlist_detection is empty
 
-#find if url is a video,
-def is_video(url):
-    for entry in params.video_indicators:
-        if url.find(entry) != -1: return True
-    return False
+    for entry in params.playlist_detection:
+        properties = {"playlist" : False, "video" : False} # reset evety loop
+
+        for indicator in entry['video_indicators']:
+            properties['video'] = True if url.find(indicator) != -1 else properties['video']
+
+        for indicator in entry['playlist_indicators']:
+            properties['playlist'] = True if url.find(indicator) != -1 else properties['playlist']
+
+    return properties
 
 def must_be_checked(url, no_playlist = params.no_playlist):
-    is_a_playlist = is_playlist(url)
-    is_a_video = is_video(url)
+    properties = define_properties(url)
+    is_a_playlist = properties['playlist']
+    is_a_video = properties['video']
 
     # To avoid failing a test for ONE video impossible to download in the entire playlist
     if is_a_video and ((not is_a_playlist) or (is_a_playlist and no_playlist)) :
@@ -41,7 +45,7 @@ def check_download(url, format):
         try:
             if must_be_checked(url):
                 logging.info("Checking download")
-                youtube_dl.download([url])
+                ydl.download([url])
             else:
                 logging.warning("Unable to check download")
         except:
