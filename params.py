@@ -10,7 +10,8 @@ default_subtitles_languages = None
 ### if not possible, it will download any available format
 default_subtitles_format = "srt"
 
-hide_format_list_in_logs = True
+### equivalent of --no-playlist option : if the playlist is in the url True = download only the current video, False = download the whole playlist
+no_playlist = True
 
 ### Change here the download directory and the file name : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
 # provided vars

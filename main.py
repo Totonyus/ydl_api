@@ -48,6 +48,7 @@ async def create_download(response : Response, background_tasks : BackgroundTask
         'ignoreerrors' : True,
         'outtmpl': download_dir + params.file_name_template(ydl_api_opts),
         'format': decoded_format,
+        'noplaylist': params.no_playlist,
         'writesubtitles': subtitles is not None,
         'subtitleslangs' : decoded_subtitles,
         'subtitlesformat': params.default_subtitles_format
