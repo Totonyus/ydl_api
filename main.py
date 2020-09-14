@@ -90,10 +90,10 @@ async def create_download(response : Response, background_tasks : BackgroundTask
     checked_download = check_download(url, decoded_format)
 
     if checked_download['checked'] is False:
-        # background_tasks.add_task(launch_download, decoded_url, ydl_opts)
+        background_tasks.add_task(launch_download, decoded_url, ydl_opts)
         response.status_code = 202
     elif checked_download['checked'] and checked_download['errors'] is False:
-        # background_tasks.add_task(launch_download, decoded_url, ydl_opts)
+        background_tasks.add_task(launch_download, decoded_url, ydl_opts)
         response.status_code = 200
     else:
         logging.error(f"Impossible to download '{decoded_url}'")
