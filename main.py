@@ -4,17 +4,46 @@ from fastapi import BackgroundTasks, FastAPI, Response
 
 app = FastAPI()
 
+#find if url is a playlist, playlists can't be secured by the check_download function
+def is_playlist(url):
+    for entry in params.playlist_indicators:
+        if url.find(entry) != -1: return True
+    return False
+
+#find if url is a video,
+def is_video(url):
+    for entry in params.video_indicators:
+        if url.find(entry) != -1: return True
+    return False
+
+def must_be_checked(url):
+    is_a_playlist = is_playlist(url)
+    is_a_video = is_video(url)
+
+    # To avoid failing a test for ONE video impossible to download in the entire playlist
+    if is_a_video and ((not is_a_playlist) or (is_a_playlist and params.no_playlist)) :
+        return True
+    elif is_a_playlist and ((not is_a_video) or (is_a_video and not params.no_playlist)):
+        return False
+    else: #In other cases : checking
+        return True
+
 ### Verify if youtube-dl can find video and the format is right
 def check_download(url, format):
     ydl_opts = { # the option ignoreerrors breaks the function but it can be a problem while downloading playlists with unavailable videos inside
         'quiet': True,
-        'simulate' : True,
-        'format' : format
+        'simulate': True,
+        'format': format,
+        'noplaylist': params.no_playlist
     }
 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:
-            ydl.download([url])
+            if must_be_checked(url):
+                logging.info("Checking download")
+                youtube_dl.download([url])
+            else:
+                logging.warning("Unable to check download")
         except:
             return False
         else:

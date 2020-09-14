@@ -43,7 +43,7 @@
             onload: function (response) {
                 const jsonResponse = JSON.parse(response.response);
                 if (response.status === 200) {
-                    GM_notification(`'Downloading in '${jsonResponse.download_dir}'`, 'Download launched');
+                    GM_notification(`Downloading in '${jsonResponse.download_dir}'`, 'Download launched');
                 } else {
                     GM_notification(`The format may be wrong or not available or there is no video to download`, 'Download failed');
                 }

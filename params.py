@@ -13,6 +13,11 @@ default_subtitles_format = "srt"
 ### equivalent of --no-playlist option : if the playlist is in the url True = download only the current video, False = download the whole playlist
 no_playlist = True
 
+### if present in url, the url is a playlist.
+### WARNING : can be hasardous, mostly set for youtube, avoid modify this
+playlist_indicators = ['?list=', '&list=']
+video_indicators = ['/watch?']
+
 ### Change here the download directory and the file name : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
 # provided vars
 # ydl_api_opts = {'url', 'hostname', 'location_identifier' }
