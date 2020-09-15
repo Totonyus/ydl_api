@@ -97,6 +97,6 @@ Parameters :
 * (optional) `location` : the identifier of the location you want to use. Set in `params.download_dir`. If not provided, default value = `default`
 
 ### ios shortcut
-Find here the shortcut created to use with ydl_api : [https://www.icloud.com/shortcuts/c32b881b80444110a4edd34c2367cc72](https://www.icloud.com/shortcuts/c32b881b80444110a4edd34c2367cc72)
+Find here the shortcut created to use with ydl_api : [https://www.icloud.com/shortcuts/f2719de8ea47404594a09cd1bcdc5d48](https://www.icloud.com/shortcuts/f2719de8ea47404594a09cd1bcdc5d48)
 
 Only the `url` is provided to the api. All other fields uses default values of the server.
