@@ -22,19 +22,25 @@ playlist_detection = [
 # provided vars
 # ydl_api_opts = {'url', 'hostname', 'location_identifier' }
 def file_name_template(ydl_api_opts):
-    return "%(title)s_(%(height)s).%(ext)s"
+    filename_template = {
+        'default' : "%(title)s_(%(height)s).%(ext)s",
+        'audio' : "%(title)s_(%(vbr)s).%(ext)s",
+    }
+    return get_value(filename_template, ydl_api_opts, 'filename_identifier')
 
 # Multiple choices with the parameter &location
+root_dir = "/"
 def download_dir(ydl_api_opts):
     locations={ ###- --%--- REPLACE ---%--- here with your different download directorues
-        'default' : f"{ydl_api_opts.get('hostname')}/",
-        #'date' : f"{date.today().strftime('%Y_%m_%d')}/" # for example : &location=date
+        'default' : f"{root_dir}{ydl_api_opts.get('hostname')}/",
+        #'date' : f"{root_dir}{date.today().strftime('%Y_%m_%d')}/" # for example : &location=date
     }
+    return get_value(locations, ydl_api_opts, 'location_identifier')
 
-    if locations.get(ydl_api_opts.get('location_identifier')) is not None:
-        location = locations.get(ydl_api_opts.get('location_identifier'))
+def get_value(list, ydl_api_opts, entry_name):
+    if list.get(ydl_api_opts.get(entry_name)) is not None:
+        result = list.get(ydl_api_opts.get(entry_name))
     else:
-        logging.warning(f"{ydl_api_opts.get('location_identifier')} identifier not found. Using the default one instead")
-        location = locations.get('default')
-
-    return location
+        logging.warning(f"{entry_name} : {ydl_api_opts.get(entry_name)} identifier not found. Using the default one instead")
+        result = list.get('default')
+    return result

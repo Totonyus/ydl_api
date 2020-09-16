@@ -62,7 +62,7 @@ def launch_download(url, ydl_opts):
 
 @app.get("/download")
 async def create_download(response : Response, background_tasks : BackgroundTasks, url: str,
-                          format: str = params.default_format, subtitles : str = params.default_subtitles_languages, location: str = "default"):
+                          format: str = params.default_format, subtitles : str = params.default_subtitles_languages, location: str = "default", filename : str = "default"):
     decoded_url = unquote(url)
     decoded_format = unquote(format)
     decoded_subtitles = subtitles.split(',') if subtitles is not None else None
@@ -71,7 +71,8 @@ async def create_download(response : Response, background_tasks : BackgroundTask
     ydl_api_opts = {
         'url': decoded_url,
         'hostname' : urlparse(decoded_url).hostname,
-        'location_identifier' : location
+        'location_identifier' : location,
+        'filename_identifier' : filename
     }
 
     download_dir = params.download_dir(ydl_api_opts)
