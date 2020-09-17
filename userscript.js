@@ -15,10 +15,11 @@
     // possible parameters : 'format', 'subtitles', 'location'
     const preset_list = [
         {name: 'Download (default)', key : 'd', host : default_host, params : {}},
-        {name: 'Download (best)', key : 'b', host : default_host, params : { format: 'bestvideo+bestaudio/best'}},
-        {name: 'Download (720p)', key : '7', host : default_host, params : { format: 'best[height=720]/best'}},
-        {name: 'Download (audio)', key : 'a', host : default_host, params : { format: 'bestaudio'}},
-        {name: 'Download (best, subtitles)', key : 's', host : default_host, params : { format: 'bestvideo+bestaudio/best', subtitles: 'en'}}, // multiple subtitles example :  'fr,en'
+        {name: 'Download (best)', key : 'b', host : default_host, params : { presets: 'best'}},
+        {name: 'Download (720p)', key : '7', host : default_host, params : { presets: 'hd'}},
+        {name: 'Download (audio)', key : 'a', host : default_host, params : { presets: 'audio'}},
+        {name: 'Download (audio + video)', key : 'v', host : default_host, params : { presets: 'best,audio'}},
+        {name: 'Download (best, subtitles)', key : 's', host : default_host, params : { presets: 'best', subtitles: 'en'}}, // multiple subtitles example :  'fr,en'
     ];
 
     const buildURL = function (preset) {
@@ -43,9 +44,9 @@
             onload: function (response) {
                 const jsonResponse = JSON.parse(response.response);
                 if (response.status === 200) {
-                    GM_notification(`Downloading in '${jsonResponse.download_dir}'`, 'Download launched');
+                    GM_notification(`Downloading`, 'Download launched');
                 } else if(response.status === 202){
-                    GM_notification(`The download have not been checked. Some files may be not downloaded. Downloading in '${jsonResponse.download_dir}'`, 'Download launched');
+                    GM_notification(`The download have not been checked. Some files may be not downloaded`, 'Download launched');
                 } else {
                     GM_notification(`The format may be wrong or not available or there is no video to download`, 'Download failed');
                 }
