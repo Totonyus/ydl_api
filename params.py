@@ -1,40 +1,35 @@
-import logging
-from datetime import date
+api_route = "/download"
 
-### Change here the default format to use : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#format-selection
-default_format="bestvideo+bestaudio/best"
+default_download_format= "bestvideo+bestaudio/best" #https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#format-selection
 
-### Example : "en,fr", None = don't download subtitles
-default_subtitles_languages = None
-
-### if not possible, it will download any available format
+default_subtitles_languages = None #example : "en,fr"
 default_subtitles_format = "srt"
 
-### equivalent of --no-playlist option : if the playlist is in the url True = download only the current video, False = download the whole playlist
-no_playlist = True
-
-### if present in url, the url is a playlist.
-playlist_detection = [
-    {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=']}, #preset for youtube
+no_playlist = True  #prevent downloading all the playlist when a video url contains playlist id
+playlist_detection = [ #used to detect if the url is a video, a playlist or a video in a playlist
+    {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=']} #youtube
 ]
 
-### Change here the download directory and the file name : https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
-# provided vars
-# ydl_api_opts = {'url', 'hostname', 'location_identifier' }
-def file_name_template(ydl_api_opts):
-    return "%(title)s_(%(height)s).%(ext)s"
+root_download_directory = "downloads"
+# https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
+# you can use those tags : %hostname%, %location_identifier%, %filename_identifier%
+download_directory_templates={ # you must keep a 'default' preset
+    'default' : f"{root_download_directory}/videos/%hostname%/",
+    'audio' : f"{root_download_directory}/audio/"
+}
 
-# Multiple choices with the parameter &location
-def download_dir(ydl_api_opts):
-    locations={ ###- --%--- REPLACE ---%--- here with your different download directorues
-        'default' : f"{ydl_api_opts.get('hostname')}/",
-        #'date' : f"{date.today().strftime('%Y_%m_%d')}/" # for example : &location=date
-    }
+# https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
+# you can use those tags : %hostname%, %location_identifier%, %filename_identifier%
+file_name_templates = { # you must keep a 'default' preset
+    'default' : "%(title)s_(%(height)s).%(ext)s",
+    'audio' : "%(title)s.%(ext)s",
+}
 
-    if locations.get(ydl_api_opts.get('location_identifier')) is not None:
-        location = locations.get(ydl_api_opts.get('location_identifier'))
-    else:
-        logging.warning(f"{ydl_api_opts.get('location_identifier')} identifier not found. Using the default one instead")
-        location = locations.get('default')
-
-    return location
+presets_templates={ # you must keep a 'default' preset
+    'default' : {'format' : default_download_format, 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
+    'audio': {'format' : 'bestaudio', 'subtitles' : default_subtitles_languages, 'location' : 'audio', 'filename' : 'audio'},
+    'best' : {'format' : 'bestvideo+bestaudio/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
+    'fullhd' : {'format' : 'best[height=1080]/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
+    'hd' : {'format' : 'best[height=720]/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
+    'sd' : {'format' : 'best[height=360]/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
+}
