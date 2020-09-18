@@ -36,7 +36,7 @@ wget https://github.com/Totonyus/ydl_api/archive/master.zip
 
 Then unzip the file and rename the unziped folder : (note you can use `unzîp -d %your_path%` to specify where you want to unzip the file ) 
 ```
-unzip master.zip; mv ydl_api-master.zip ydl_api
+unzip master.zip; mv ydl_api-master ydl_api
 ```
 
 #### Configuration
