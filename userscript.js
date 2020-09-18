@@ -14,12 +14,12 @@
 
     // possible parameters : 'format', 'subtitles', 'location', 'filename', 'presets'
     const preset_list = [
-        {name: 'Download (default)', key : 'd', host : default_host, params : {}},
-        {name: 'Download (best)', key : 'b', host : default_host, params : { presets: 'best'}},
-        {name: 'Download (720p)', key : '7', host : default_host, params : { presets: 'hd'}},
-        {name: 'Download (audio)', key : 'a', host : default_host, params : { presets: 'audio'}},
-        {name: 'Download (audio + video)', key : 'v', host : default_host, params : { presets: 'best,audio'}},
-        {name: 'Download (best, subtitles)', key : 's', host : default_host, params : { presets: 'best', subtitles: 'en'}}, // multiple subtitles example :  'fr,en'
+        {name: 'Download (default)', key : '1', host : default_host, params : {}},
+        {name: 'Download (best)', key : '2', host : default_host, params : { presets: 'best'}},
+        {name: 'Download (720p)', key : '3', host : default_host, params : { presets: 'hd'}},
+        {name: 'Download (audio)', key : '4', host : default_host, params : { presets: 'audio'}},
+        {name: 'Download (audio + video)', key : '5', host : default_host, params : { presets: 'best,audio'}},
+        {name: 'Download (best, subtitles)', key : '6', host : default_host, params : { presets: 'best', subtitles: 'en'}}, // multiple subtitles example :  'fr,en'
     ];
 
     const buildURL = function (preset) {
