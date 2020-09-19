@@ -181,3 +181,16 @@ def generate_ydl_options_sets(url, preset_objects, query_params):
             ydl_opts = set_ydl_opts(url, definitive_params)
             checked_downloads_list.append({'check_result' : check_download_validity(url, definitive_params.get('format')), 'ydl_opts' : ydl_opts})
     return checked_downloads_list
+
+"""
+    Find the user associated to the given token 
+"""
+def find_associated_user(token):
+    if token is None:
+        return None
+
+    for user in params.authorized_users_list:
+        if user.get('token') == token:
+            found_user = user
+            return found_user
+    return None

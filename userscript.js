@@ -9,8 +9,9 @@
 (function() {
     'use strict';
 
-    // ---%--- REPLACE ---%--- your host here
+    // ---%--- REPLACE ---%--- your host and token here
     const default_host = 'http://127.0.0.1:5011/download';
+    const userToken = 'ydl_api_very_secret_token'; // you can put null if the users management is disabled
 
     // possible parameters : 'format', 'subtitles', 'location', 'filename', 'presets'
     const preset_list = [
@@ -27,6 +28,10 @@
 
         url.searchParams.append('url', window.location.href);
 
+        if(userToken !== null){
+            url.searchParams.append('token', userToken);
+        }
+
         Object.entries(preset.params).forEach(([key, value]) => {
             url.searchParams.append(key, value);
         });
@@ -42,11 +47,12 @@
                 GM_notification('Host seams unreachable, is the server up ?', 'Download failed');
             },
             onload: function (response) {
-                const jsonResponse = JSON.parse(response.response);
                 if (response.status === 200) {
                     GM_notification(`Downloading`, 'Download launched');
                 } else if(response.status === 202){
                     GM_notification(`The download have not been checked. Some files may be not downloaded`, 'Download launched');
+                } else if(response.status === 401){
+                    GM_notification(`The server require a user token or the provided token is wrong`, 'Authentication failed');
                 } else {
                     GM_notification(`The format may be wrong or not available or there is no video to download`, 'Download failed');
                 }

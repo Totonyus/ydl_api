@@ -15,7 +15,7 @@ This is my very first python program. I did my best. If you are an experienced p
 * `launch.sh` a simple sh file to launch the server
 * `userscript.js` a javascript file you can import in [Greasemonkey (firefox)](https://addons.mozilla.org/fr/firefox/addon/greasemonkey/) or [Tampermonkey (chrome)](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=fr) to access the api from yout browser
 * `ydl_api.service` a systemd service file to launch this application as a daemon
-* An iOS shortcut you can find [here](https://www.icloud.com/shortcuts/055260591bfe4e6a837df90864705739)
+* An iOS shortcut you can find [here](https://www.icloud.com/shortcuts/982053101807489886fa8a922ded8662)
 
 ### Dependencies
 * Installation with distribution package manager (`apt`, `yum`, ...) : `python3`, `python3-pip`, `ffmpeg`
@@ -34,7 +34,7 @@ Download the latest release :
 wget https://github.com/Totonyus/ydl_api/archive/master.zip
 ```
 
-Then unzip the file and rename the unziped folder : (note you can use `unzîp -d %your_path%` to specify where you want to unzip the file ) 
+Then unzip the file and rename the unziped folder : (note you can use `unzip -d %your_path%` to specify where you want to unzip the file ) 
 ```
 unzip master.zip; mv ydl_api-master ydl_api
 ```
@@ -123,6 +123,17 @@ Some rules :
 * If not all provided presets are correct, only the correct presets will be downloaded
 * If no correct preset is provided, the default preset is used
 
+#### Authentication
+The authentication is disabled by default. It could be a great idea to activate it if :
+- you open your ydl_api installation on the web
+- multiple users uses your ydl_api installation
+
+##### Define users
+The users list can be set in `params.authorized_users_list` with those parameters :
+- name : just a common name, only used within logs
+- token : the token of the user. The token must be provided in any request
+- force_location : the destination folder can be forced according to the user, if `None`, the default behavior is used 
+
 #### Query parameters
 Parameters :
 * `url` : the page to download
@@ -131,13 +142,15 @@ Parameters :
 * (optional) `location` : the identifier of the location you want to use. Set in `download_directory_templates`. If not provided, default value = `default`
 * (optional) `filename` : the identifier of the filename you want to use. Set in `params.file_name_templates`. If not provided, default value = `default`
 * (optional) `presets` : the identifier of the presets you want to use. Multiple preset are separated by coma `&presets=audio,best`. The presets are defines in `params.presets_templates`
+* (Optional if `params.enable_users_management` is False) : the user authentication token
 
 #### Priority
-The priority order of parameters is : Query paramaters > Preset parameters > Default parameters.
+The priority order of parameters is : User forced location > Query paramaters > Preset parameters > Default parameters.
 
 This means :
 * you can override a preset parameter in your query
 * if a parameter is not present in you preset, the parameter of the default preset will be used (unless the parameter is present il query)
+* If the location is forced for a user, there is no way to change it in the query
 
 #### API usage examples
 Only the url is required to use the api.

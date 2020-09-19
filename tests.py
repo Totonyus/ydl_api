@@ -41,4 +41,8 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(ydl_utils.existing_presets(['b3st', 'aud1o'])), 1)
         self.assertEqual(len(ydl_utils.existing_presets(['b3st'])), 1)
 
+    def test_find_associated_user(self):
+        self.assertTrue(ydl_utils.find_associated_user('ydl_api_very_secret_token') is not None)
+        self.assertTrue(ydl_utils.find_associated_user('ydl_api_wrong_very_secret_token') is None)
+
 unittest.main()

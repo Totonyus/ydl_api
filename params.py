@@ -14,22 +14,30 @@ root_download_directory = "downloads"
 # https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
 # you can use those tags : %hostname%, %location_identifier%, %filename_identifier%
 download_directory_templates={ # you must keep a 'default' preset
-    'default' : f"{root_download_directory}/videos/%hostname%/",
-    'audio' : f"{root_download_directory}/audio/"
+    'default' : f"{root_download_directory}/",
+    #'dad' : "/home/dad/" # utility example
 }
 
 # https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
 # you can use those tags : %hostname%, %location_identifier%, %filename_identifier%
 file_name_templates = { # you must keep a 'default' preset
-    'default' : "%(title)s_(%(height)s).%(ext)s",
-    'audio' : "%(title)s.%(ext)s",
+    'default' : "videos/%hostname%/%(title)s_(%(height)s).%(ext)s",
+    'audio' : "audio/%(title)s.%(ext)s",
 }
 
 presets_templates={ # you must keep a 'default' preset
     'default' : {'format' : default_download_format, 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
-    'audio': {'format' : 'bestaudio', 'subtitles' : default_subtitles_languages, 'location' : 'audio', 'filename' : 'audio'},
-    'best' : {'format' : 'bestvideo+bestaudio/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
-    'fullhd' : {'format' : 'best[height=1080]/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
-    'hd' : {'format' : 'best[height=720]/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
-    'sd' : {'format' : 'best[height=360]/best', 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
+    'audio': {'format' : 'bestaudio', 'filename' : 'audio'}, # you can skip parameters you want to remain default
+    'best' : {'format' : 'bestvideo+bestaudio/best'},
+    'fullhd' : {'format' : 'best[height=1080]/best'},
+    'hd' : {'format' : 'best[height=720]/best'},
+    'sd' : {'format' : 'best[height=360]/best'},
 }
+
+# enable security in case yu want to open the api to the web
+enable_users_management = False
+
+authorized_users_list = [ # ---%--- REPLACE ---%--- your token here
+    { 'name' : 'default', 'token' : 'ydl_api_very_secret_token', 'force_location' : None },
+    #{ 'name' : 'dad', 'token' : 'dad_super_password', 'force_location' : 'dad' } #for example
+]
