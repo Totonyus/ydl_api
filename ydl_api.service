@@ -18,10 +18,3 @@ ExecStart=sh launch.sh
 
 [Install]
 WantedBy=multi-user.target
-
-
-
-
-
-
-
