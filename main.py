@@ -21,7 +21,7 @@ async def download_request(response : Response, background_tasks : BackgroundTas
         user = ydl_utils.find_associated_user(unquote(token))
 
     if params.enable_users_management and user is None:
-        logging.warning(f"An unauthorized user tried to download {decoded_url}")
+        logging.warning(f'An unauthorized user tried to download {decoded_url}')
         response.status_code = 401 # unauthorized
         return {'status_code' : response.status_code}
 
@@ -53,7 +53,7 @@ async def download_request(response : Response, background_tasks : BackgroundTas
         response.status_code = 202 # request ok but result not granted
     # if all downloads are in error, we can ensure no file will be downloaded
     else:
-        logging.error(f"Impossible to download '{decoded_url}'")
+        logging.error(f'Impossible to download \'{decoded_url}\'')
         response.status_code = 400 # bad request
 
     return {

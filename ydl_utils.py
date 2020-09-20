@@ -10,7 +10,7 @@ def get_template_from_template_list(template_list, ydl_api_opts, entry_name):
     if template_list.get(ydl_api_opts.get(entry_name)) is not None:
         result = template_list.get(ydl_api_opts.get(entry_name))
     else:
-        logging.warning(f"{entry_name} : {ydl_api_opts.get(entry_name)} identifier not found. Using the default one instead")
+        logging.warning(f'{entry_name} : {ydl_api_opts.get(entry_name)} identifier not found. Using the default one instead')
         result = template_list.get('default')
         default = True
     return {'result' : result, 'default' : default}
@@ -52,10 +52,10 @@ def can_be_checked(url, no_playlist = params.no_playlist):
     Used to define if the url is a video, un playlist or a video in a playlist
 """
 def define_url_properties(url):
-    properties = {"playlist" : False, "video" : False} # set at the beginning in case params.playlist_detection is empty
+    properties = {'playlist' : False, 'video' : False} # set at the beginning in case params.playlist_detection is empty
 
     for entry in params.playlist_detection:
-        properties = {"playlist" : False, "video" : False} # reset every loop
+        properties = {'playlist' : False, 'video' : False} # reset every loop
 
         for indicator in entry['video_indicators']:
             properties['video'] = True if url.find(indicator) != -1 else properties['video']
@@ -113,8 +113,7 @@ def set_ydl_opts(url, definitive_params):
         'format': definitive_params.get('format'),
         'subtitleslangs' : definitive_params.get('subtitles').split(',') if definitive_params.get('subtitles') is not None else None,
         'writesubtitles' : definitive_params.get('subtitles') is not None,
-        'outtmpl' : resolve_templates_tags(download_directory_template.get('result') + file_name_template.get('result'),
-                                           ydl_api_opts),
+        'outtmpl' : resolve_templates_tags(download_directory_template.get('result') + file_name_template.get('result'), ydl_api_opts),
         'ydl_api_technical' : {'download_dir_default' : download_directory_template.get('default'), 'name_template_default' : file_name_template.get('default')}
     }
 
@@ -137,7 +136,7 @@ def check_download_validity(url, download_format):
                 ydl.download([url])
                 return {'checked' : True, 'errors' : False}
             else:
-                logging.warning("Unable to check download")
+                logging.warning('Unable to check download')
                 return {'checked' : False, 'errors' : False} # can't be wrong if not tested right ?
         except:
             return {'checked' : True, 'errors' : True}
@@ -148,7 +147,7 @@ def check_download_validity(url, download_format):
 def launch_downloads(url, download_options_sets):
     for option_set in download_options_sets:
         ydl_opts = option_set.get('ydl_opts')
-        logging.info(f"Downloading '{url}' with quality '{ydl_opts['format']}' in '{ydl_opts['outtmpl']}'")
+        logging.info(f'Downloading \'{url}\' with quality \'{ydl_opts["format"]}\' in \'{ydl_opts["outtmpl"]}\'')
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
@@ -157,7 +156,7 @@ def launch_downloads(url, download_options_sets):
     Resolve tags in templates
 """
 def resolve_templates_tags(template_with_tags, ydl_api_opts):
-    regex = r"%(\w*)%"
+    regex = r'%(\w*)%'
 
     matches = re.finditer(regex, template_with_tags)
 
