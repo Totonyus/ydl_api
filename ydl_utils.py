@@ -162,7 +162,11 @@ def resolve_templates_tags(template_with_tags, ydl_api_opts):
 
     resolved_path = template_with_tags
     for match in matches:
-        resolved_path = resolved_path.replace(match.group(0), ydl_api_opts.get(match.group(1)))
+        tag_value = ydl_api_opts.get(match.group(1))
+        if tag_value is not None :
+            resolved_path = resolved_path.replace(match.group(0), ydl_api_opts.get(match.group(1)))
+        else:
+            resolved_path = resolved_path.replace(match.group(0), 'NA')
     return resolved_path
 
 """
