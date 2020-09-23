@@ -38,7 +38,7 @@ async def download_request(response : Response, background_tasks : BackgroundTas
         query_parameters['location'] = user.get('force_location')
 
     # generate all options sets for all download
-    downloads_options_sets = ydl_utils.generate_ydl_options_sets(decoded_url, selected_presets_objects, query_parameters)
+    downloads_options_sets = ydl_utils.generate_ydl_options_sets(decoded_url, selected_presets_objects, query_parameters, user)
 
     # count the number of check downloads and the number of errors
     validity_check = ydl_utils.recap_all_downloads_validity(downloads_options_sets)

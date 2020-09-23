@@ -114,7 +114,7 @@ In all cases, always keep a template named `default` (you still can modify them)
 ##### Download destinations and file name templates
 In those templates, you can use tags delimited by `%` (example : `%hostname%`).
 
-Provided tags are `hostname`, `location_identifier` and `filename_identifier`
+Provided tags are `hostname`, `location_identifier`, `filename_identifier` and  `user_name`
 
 ##### Presets
 If more than one preset is provided (`&presets=audio,best`), the url will be downloaded one time with each format. For example, you can download both music and clip of a song video.

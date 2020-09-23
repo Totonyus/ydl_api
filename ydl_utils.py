@@ -69,13 +69,13 @@ def define_url_properties(url):
     Get definitive parameters to use
     Priority : query_params > preset_params > default_params
 """
-def get_definitive_params(query_params, preset_params = None):
+def get_definitive_params(query_params, user, preset_params=None):
     default_params = get_template_from_template_list(params.presets_templates, {'preset_identifier': 'default'}, 'preset_identifier').get('result')
 
     if preset_params is None:
         preset_params = default_params
 
-    definitive_params = {}
+    definitive_params = {'user_name' : user.get('name') if user is not None else None}
     for param in ['format', 'subtitles', 'location', 'filename']:
         definitive_params[param] = query_params.get(param) if query_params.get(param) is not None else preset_params.get(param) if preset_params.get(param) is not None else default_params.get(param)
     return definitive_params
@@ -98,6 +98,7 @@ def recap_all_downloads_validity(download_list):
 def set_ydl_opts(url, definitive_params):
     ydl_api_opts = { #used to pass resolve tags in templates
         'hostname' : urlparse(url).hostname,
+        'user_name' : definitive_params.get('user_name'),
         'location_identifier' : definitive_params.get('location'),
         'filename_identifier' : definitive_params.get('filename'),
     }
@@ -172,15 +173,15 @@ def resolve_templates_tags(template_with_tags, ydl_api_opts):
 """
     Generate ydl_opts for all downloads
 """
-def generate_ydl_options_sets(url, preset_objects, query_params):
+def generate_ydl_options_sets(url, preset_objects, query_params, user):
     checked_downloads_list = []
     if len(preset_objects) == 0:
-        definitive_params = get_definitive_params(query_params, None)
+        definitive_params = get_definitive_params(query_params, user, None)
         ydl_opts = set_ydl_opts(url, definitive_params)
         checked_downloads_list.append({'check_result' : check_download_validity(url, definitive_params.get('format')), 'ydl_opts' : ydl_opts})
     else:
         for selected_preset in preset_objects:
-            definitive_params = get_definitive_params(query_params, selected_preset)
+            definitive_params = get_definitive_params(query_params, user, selected_preset)
             ydl_opts = set_ydl_opts(url, definitive_params)
             checked_downloads_list.append({'check_result' : check_download_validity(url, definitive_params.get('format')), 'ydl_opts' : ydl_opts})
     return checked_downloads_list
