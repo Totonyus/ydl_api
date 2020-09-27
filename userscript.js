@@ -12,6 +12,7 @@
     // ---%--- REPLACE ---%--- your host and token here
     const default_host = 'http://127.0.0.1:5011/download';
     const userToken = null;
+    const notificationTimeout = 5000;
 
     // possible parameters : 'format', 'subtitles', 'location', 'filename', 'presets'
     const preset_list = [
@@ -40,22 +41,27 @@
     };
 
     const launchRequest = function (preset) {
+        const notificationOptions = {};
+
         GM_xmlhttpRequest({
             method: 'GET',
             url: buildURL(preset),
             onerror: function () {
-                GM_notification('Host seams unreachable, is the server up ?', 'Download failed');
+                notificationOptions.title = `Download failed`; notificationOptions.text = `Host seams unreachable, is the server up ?`;
+                GM_notification(notificationOptions);
             },
             onload: function (response) {
                 if (response.status === 200) {
-                    GM_notification(`Downloading`, 'Download launched');
+                    notificationOptions.title = `Download launched`; notificationOptions.text = `Downloading`; notificationOptions.timeout = notificationTimeout;
                 } else if(response.status === 202){
-                    GM_notification(`The download have not been checked. Some files may be not downloaded`, 'Download launched');
+                    notificationOptions.title = `Download launched`; notificationOptions.text = `The download have not been checked. Some files may be not downloaded`; notificationOptions.timeout = notificationTimeout;
                 } else if(response.status === 401){
-                    GM_notification(`The server require a user token or the provided token is wrong`, 'Authentication failed');
+                    notificationOptions.title = `Authentication failed`; notificationOptions.text = `The server require a user token or the provided token is wrong`;
                 } else {
-                    GM_notification(`The format may be wrong or not available or there is no video to download`, 'Download failed');
+                    notificationOptions.title = `Download failed`; notificationOptions.text = `The format may be wrong or not available or there is no video to download`;
                 }
+
+                GM_notification(notificationOptions);
             }
         });
     };
