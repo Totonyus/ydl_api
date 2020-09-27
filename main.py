@@ -9,11 +9,11 @@ async def download_request(response : Response, background_tasks : BackgroundTas
                           format = None, subtitles  = None, location = None, filename  = None, presets = None):
 
     decoded_url = unquote(url)
-    decoded_presets = [] # from string to list
+    decoded_presets = None # from string to list
     selected_presets_objects = [] # store presets objects required by the presets field
 
     if presets is not None:
-        decoded_presets = presets.split(',') if presets is not None else None
+        decoded_presets = presets.split(',')
         selected_presets_objects = ydl_utils.existing_presets(decoded_presets)  # transform string in object
 
     user = None

@@ -11,7 +11,7 @@
 
     // ---%--- REPLACE ---%--- your host and token here
     const default_host = 'http://127.0.0.1:5011/download';
-    const userToken = 'ydl_api_very_secret_token'; // you can put null if the users management is disabled
+    const userToken = null;
 
     // possible parameters : 'format', 'subtitles', 'location', 'filename', 'presets'
     const preset_list = [
