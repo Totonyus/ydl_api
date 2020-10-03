@@ -5,6 +5,8 @@ default_download_format= 'bestvideo+bestaudio/best' #https://github.com/ytdl-org
 default_subtitles_languages = None #example : 'en,fr'
 default_subtitles_format = 'srt'
 
+keep_modification_time = False #True =  modified date of the file will be the upload date, False = current date
+
 no_playlist = True  #prevent downloading all the playlist when a video url contains playlist id
 playlist_detection = [ #used to detect if the url is a video, a playlist or a video in a playlist
     {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=']} #youtube

@@ -99,7 +99,8 @@ def set_ydl_opts(url, definitive_params):
         'format': definitive_params.get('format'),
         'subtitleslangs' : definitive_params.get('subtitles').split(',') if definitive_params.get('subtitles') is not None else None,
         'writesubtitles' : definitive_params.get('subtitles') is not None,
-        'outtmpl' : resolve_templates_tags(download_directory_template + file_name_template, ydl_api_opts)
+        'outtmpl' : resolve_templates_tags(download_directory_template + file_name_template, ydl_api_opts),
+        'updatetime' : params.keep_modification_time
     }
 
     return ydl_opts
