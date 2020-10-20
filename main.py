@@ -9,7 +9,7 @@ async def download_request(response : Response, background_tasks : BackgroundTas
                           format = None, subtitles  = None, location = None, filename  = None, presets = None):
 
     decoded_url = unquote(url)
-    decoded_presets = None # from string to list
+    decoded_presets = [] # from string to list
     selected_presets_objects = [] # store presets objects required by the presets field
 
     if presets is not None:
