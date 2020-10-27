@@ -142,7 +142,7 @@ Parameters :
 * (optional) `location` : the identifier of the location you want to use. Set in `download_directory_templates`. If not provided, default value = `default`
 * (optional) `filename` : the identifier of the filename you want to use. Set in `params.file_name_templates`. If not provided, default value = `default`
 * (optional) `presets` : the identifier of the presets you want to use. Multiple preset are separated by coma `&presets=audio,best`. The presets are defines in `params.presets_templates`
-* (Optional if `params.enable_users_management` is False) : the user authentication token
+* (Optional if `params.enable_users_management` is False) `token`: the user authentication token
 
 #### Priority
 The priority order of parameters is : User forced location > Query paramaters > Preset parameters > Default parameters.
