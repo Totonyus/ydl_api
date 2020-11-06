@@ -1,7 +1,10 @@
 import unittest
 import ydl_utils
+import youtube_dl
 
 class Tests(unittest.TestCase):
+    def test_ydl_version(self):
+        print(f'youtube-dl installed version : {youtube_dl.version.__version__}')
 
     #Tests with no_playlist = True
     def test_must_be_checked_no_playlist(self):

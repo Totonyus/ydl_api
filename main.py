@@ -1,4 +1,4 @@
-import logging, ydl_utils, params
+import logging, ydl_utils, params, youtube_dl
 from urllib.parse import urlparse, unquote
 from fastapi import BackgroundTasks, FastAPI, Response
 
@@ -60,5 +60,6 @@ async def download_request(response : Response, background_tasks : BackgroundTas
         'status_code' : response.status_code,
         'url' : decoded_url,
         'presets_errors' : (len(decoded_presets) - len(selected_presets_objects)),
-        'list' : downloads_options_sets
+        'list' : downloads_options_sets,
+        'youtube-dl_version' : youtube_dl.version.__version__
     }
