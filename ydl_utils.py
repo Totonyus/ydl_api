@@ -1,5 +1,6 @@
 import logging, params, youtube_dl, re
 from urllib.parse import urlparse, unquote
+import hooks, functools
 
 """
     Check if all requested presets are available
@@ -57,7 +58,9 @@ def get_definitive_params(query_params, user, preset_params=None):
 
     if preset_params is None: preset_params = default_params
 
-    definitive_params = {'user_name' : user.get('name') if user is not None else None}
+    definitive_params = {}
+    definitive_params['user_name'] = user.get('name') if user is not None else None
+    definitive_params['user_token'] = user.get('token') if user is not None else None
 
     for param in ['format', 'subtitles', 'location', 'filename']:
         definitive_params[param] = query_params.get(param) if query_params.get(param) is not None else preset_params.get(param) if preset_params.get(param) is not None else default_params.get(param)
@@ -82,6 +85,7 @@ def set_ydl_opts(url, definitive_params):
     ydl_api_opts = { #used to pass resolve tags in templates
         'hostname' : urlparse(url).hostname,
         'user_name' : definitive_params.get('user_name'),
+        'user_token' : definitive_params.get('user_token'),
         'location_identifier' : definitive_params.get('location'),
         'filename_identifier' : definitive_params.get('filename'),
     }
@@ -100,7 +104,8 @@ def set_ydl_opts(url, definitive_params):
         'subtitleslangs' : definitive_params.get('subtitles').split(',') if definitive_params.get('subtitles') is not None else None,
         'writesubtitles' : definitive_params.get('subtitles') is not None,
         'outtmpl' : resolve_templates_tags(download_directory_template + file_name_template, ydl_api_opts),
-        'updatetime' : params.keep_modification_time
+        'updatetime' : params.keep_modification_time,
+        'progress_hooks' : [functools.partial(hooks.handler, ydl_api_opts)]
     }
 
     return ydl_opts

@@ -8,9 +8,9 @@ After=network.target
 type=simple
 RemainAfterExit=yes
 
-# (Optional, default='root') Enter here the user and group you want
-User=---%--- REPLACE ---%---
-Group=---%--- REPLACE ---%---
+# (Optional, default='root') uncomment and enter here the user and group you want
+#User=---%--- REPLACE ---%---
+#Group=---%--- REPLACE ---%---
 
 # The directory where you downloaded this program
 WorkingDirectory=---%--- REPLACE ---%---

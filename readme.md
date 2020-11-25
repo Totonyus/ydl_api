@@ -12,6 +12,7 @@ This is my very first python program. I did my best. If you are an experienced p
 * `readme.md`
 * `main.py` the main program
 * `params.py` all the default parameters of the application, everything is set up to offer you a working application out of the box
+* `hooks.py` youtube-dl hooks handler method. Customize this as you want !
 * `launch.sh` a simple sh file to launch the server
 * `userscript.js` a javascript file you can import in [Greasemonkey (firefox)](https://addons.mozilla.org/fr/firefox/addon/greasemonkey/) or [Tampermonkey (chrome)](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=fr) to access the api from yout browser
 * `ydl_api.service` a systemd service file to launch this application as a daemon
@@ -22,10 +23,10 @@ This is my very first python program. I did my best. If you are an experienced p
 * Installation with pip3 : `fastapi`, `uvicorn`, `youtube-dl`
 
 ```
-pip3 install fastapi youtube-dl uvicorn
+pip3 install fastapi youtube-dl uvicorn --upgrade
 ``` 
 
-* Make sure you have the last youtube-dl version installed : `youtube-dl --version` (currently `2020.09.06`). You could have problems with some videos if you use an older version.
+* Make sure you have the last youtube-dl version installed : `youtube-dl --version` (currently `2020.11.1.1`). You could have problems with some videos if you use an older version.
 
 ### Installation
 #### Download this repo
