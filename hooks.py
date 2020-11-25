@@ -2,8 +2,18 @@ import logging
 
 """
 You can customize this method as you want
-ydl_opts provides 'url', 'hostname', 'user_name', 'user_token, 'location_identifier', 'filename_identifier'
-download is the standard youtube-dl object
+    ydl_api_opts = {
+        'hostname' : urlparse(url).hostname,
+        'user_name' : definitive_params.get('user_name'),
+        'user_token' : definitive_params.get('user_token'),
+        'location_identifier' : definitive_params.get('location'),
+        'filename_identifier' : definitive_params.get('filename'),
+        'url' : url,
+        'is_playlist' : url_properties.get('playlist'),
+        'is_video' : url_properties.get('video')
+    }
+    
+    download is the standard youtube-dl object
 """
 def handler(ydl_opts, download):
     if download.get('status') == 'finished':

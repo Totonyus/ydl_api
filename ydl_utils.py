@@ -82,13 +82,17 @@ def recap_all_downloads_validity(download_list):
     Generate download options set 
 """
 def set_ydl_opts(url, definitive_params):
-    ydl_api_opts = { #used to pass resolve tags in templates
+    url_properties = define_url_properties(url)
+
+    ydl_api_opts = { #used to resolve tags in templates
         'hostname' : urlparse(url).hostname,
         'user_name' : definitive_params.get('user_name'),
         'user_token' : definitive_params.get('user_token'),
         'location_identifier' : definitive_params.get('location'),
         'filename_identifier' : definitive_params.get('filename'),
-        'url' : url
+        'url' : url,
+        'is_playlist' : url_properties.get('playlist'),
+        'is_video' : url_properties.get('video')
     }
 
     download_directory_template = params.download_directory_templates.get(ydl_api_opts.get('location_identifier'))
