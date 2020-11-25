@@ -88,6 +88,7 @@ def set_ydl_opts(url, definitive_params):
         'user_token' : definitive_params.get('user_token'),
         'location_identifier' : definitive_params.get('location'),
         'filename_identifier' : definitive_params.get('filename'),
+        'url' : url
     }
 
     download_directory_template = params.download_directory_templates.get(ydl_api_opts.get('location_identifier'))

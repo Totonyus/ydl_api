@@ -2,7 +2,7 @@ import logging
 
 """
 You can customize this method as you want
-ydl_opts provides 'hostname', 'user_name', 'user_token, 'location_identifier', 'filename_identifier'
+ydl_opts provides 'url', 'hostname', 'user_name', 'user_token, 'location_identifier', 'filename_identifier'
 download is the standard youtube-dl object
 """
 def handler(ydl_opts, download):
