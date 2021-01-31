@@ -1,4 +1,5 @@
 api_route = '/download'
+api_route_info = '/info'
 
 default_download_format= 'bestvideo+bestaudio/best' #https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#format-selection
 
@@ -31,9 +32,9 @@ presets_templates={ # you must keep a 'default' preset
     'default' : {'format' : default_download_format, 'subtitles' : default_subtitles_languages, 'location' : 'default', 'filename' : 'default'},
     'audio': {'format' : 'bestaudio', 'filename' : 'audio'}, # you can skip parameters you want to remain default
     'best' : {'format' : 'bestvideo+bestaudio/best'},
-    'fullhd' : {'format' : 'best[height=1080]/best'},
-    'hd' : {'format' : 'best[height=720]/best'},
-    'sd' : {'format' : 'best[height=360]/best'},
+    'fullhd' : {'format' : 'best[height=1080]/bestvideo[height=1080]+bestaudio/best'},
+    'hd' : {'format' : 'best[height=720]/bestvideo[height=720]+bestaudio/best'},
+    'sd' : {'format' : 'best[height=360]/bestvideo[height=360]+bestaudio/best'},
 }
 
 # enable security in case yu want to open the api to the web

@@ -63,3 +63,10 @@ async def download_request(response : Response, background_tasks : BackgroundTas
         'list' : downloads_options_sets,
         'youtube-dl_version' : youtube_dl.version.__version__
     }
+
+@app.get(params.api_route_info)
+async def download_request():
+    return {
+        'state' : 'started',
+        'ydl_version' : youtube_dl.version.__version__
+    }
