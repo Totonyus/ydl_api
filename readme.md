@@ -16,7 +16,7 @@ This is my very first python program. I did my best. If you are an experienced p
 * `launch.sh` a simple sh file to launch the server
 * `userscript.js` a javascript file you can import in [Greasemonkey (firefox)](https://addons.mozilla.org/fr/firefox/addon/greasemonkey/) or [Tampermonkey (chrome)](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=fr) to access the api from yout browser
 * `ydl_api.service` a systemd service file to launch this application as a daemon
-* An iOS shortcut you can find [here](https://www.icloud.com/shortcuts/982053101807489886fa8a922ded8662)
+* An iOS shortcut you can find [here](https://www.icloud.com/shortcuts/a4656b84fb614f3ebce46d8d8c9d0a38)
 
 ### Dependencies
 * Installation with distribution package manager (`apt`, `yum`, ...) : `python3`, `python3-pip`, `ffmpeg`
