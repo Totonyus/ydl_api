@@ -10,7 +10,7 @@ keep_modification_time = False #True =  modified date of the file will be the up
 
 no_playlist = True  #prevent downloading all the playlist when a video url contains playlist id
 playlist_detection = [ #used to detect if the url is a video, a playlist or a video in a playlist
-    {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=', '/user/']} #youtube
+    {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=', '/user/', '/playlists']} #youtube
 ]
 
 root_download_directory = 'downloads'
@@ -25,6 +25,7 @@ download_directory_templates={ # you must keep a 'default' preset
 # you can use those tags : %hostname%, %location_identifier%, %filename_identifier%, %user_name%
 file_name_templates = { # you must keep a 'default' preset
     'default' : 'videos/%hostname%/%(title)s_(%(height)s).%(ext)s',
+    'playlist' : 'videos/%hostname%/playlists/%(playlist)s/%(title)s_(%(height)s).%(ext)s',
     'audio' : 'audio/%(title)s.%(ext)s',
 }
 
@@ -35,6 +36,7 @@ presets_templates={ # you must keep a 'default' preset
     'fullhd' : {'format' : 'best[height=1080]/bestvideo[height=1080]+bestaudio/best'},
     'hd' : {'format' : 'best[height=720]/bestvideo[height=720]+bestaudio/best'},
     'sd' : {'format' : 'best[height=360]/bestvideo[height=360]+bestaudio/best'},
+    'archiving' : {'filename' : 'playlist'},
 }
 
 # enable security in case yu want to open the api to the web

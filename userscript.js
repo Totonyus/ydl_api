@@ -22,6 +22,7 @@
         {name: 'Download (audio)', key : '4', host : default_host, params : { presets: 'audio'}},
         {name: 'Download (audio + video)', key : '5', host : default_host, params : { presets: 'best,audio'}},
         {name: 'Download (best, subtitles)', key : '6', host : default_host, params : { presets: 'best', subtitles: 'en'}}, // multiple subtitles example :  'fr,en'
+        {name: 'Archiving', key : '7', host : default_host, params : { presets: 'archiving'}},
     ];
 
     const buildURL = function (preset) {
