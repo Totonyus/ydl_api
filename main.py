@@ -1,4 +1,4 @@
-import logging, ydl_utils, params, youtube_dl
+import logging, ydl_utils, params, youtube_dl, process_utils
 from urllib.parse import urlparse, unquote
 from fastapi import BackgroundTasks, FastAPI, Response
 
@@ -17,7 +17,7 @@ async def download_request(response : Response, background_tasks : BackgroundTas
         selected_presets_objects = ydl_utils.existing_presets(decoded_presets)  # transform string in object
 
     user = None
-    if params.enable_users_management:
+    if params.enable_users_management and token is not None:
         user = ydl_utils.find_associated_user(unquote(token))
 
     if params.enable_users_management and user is None:
@@ -65,8 +65,44 @@ async def download_request(response : Response, background_tasks : BackgroundTas
     }
 
 @app.get(params.api_route_info)
-async def download_request():
+async def info_request():
     return {
         'state' : 'started',
         'ydl_version' : youtube_dl.version.__version__
     }
+
+@app.get(params.api_route_active_downloads)
+async def active_downloads_request(response : Response, token = None):
+    user = None
+    if params.enable_users_management and token is not None:
+        user = ydl_utils.find_associated_user(unquote(token))
+
+    if params.enable_users_management and user is None:
+        response.status_code = 401 # unauthorized
+        return {'status_code' : response.status_code}
+
+    return process_utils.get_active_downloads_list()
+
+@app.get(f'{params.api_route_active_downloads}/terminate')
+async def terminate_all_active_downloads(response : Response, token = None):
+    user = None
+    if params.enable_users_management and token is not None:
+        user = ydl_utils.find_associated_user(unquote(token))
+
+    if params.enable_users_management and user is None:
+        response.status_code = 401 # unauthorized
+        return {'status_code' : response.status_code}
+
+    return process_utils.terminate_all_active_downloads()
+
+@app.get(f'{params.api_route_active_downloads}/terminate/{"{pid}"}')
+async def terminate_active_download(response : Response, pid, token = None):
+    user = None
+    if params.enable_users_management and token is not None:
+        user = ydl_utils.find_associated_user(unquote(token))
+
+    if params.enable_users_management and user is None:
+        response.status_code = 401 # unauthorized
+        return {'status_code' : response.status_code}
+
+    return process_utils.terminate_active_download(unquote(pid))
