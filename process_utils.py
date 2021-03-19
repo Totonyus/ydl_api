@@ -11,6 +11,7 @@ def get_active_downloads_list():
     for child in children_process:
         active_download = {
             'command_line': f'{child.cmdline()}',
+            'filename': get_current_download_file_destination(child.cmdline()),
             'pid': child.pid
         }
 
@@ -74,10 +75,17 @@ def terminate_active_download(pid):
         new_name = f'{filename_info.get("path")}{filename_info.get("filename_stem")}_terminated{filename_info.get("extension")}'
 
         os.rename(filename_info.get('part_filename'), new_name)  # renaming file to remove the .part
+        return pid
+
+    return None
 
 
 def terminate_all_active_downloads():
     logging.info('All active downloads are being terminated')
 
+    pids = []
     for download in get_active_downloads_list():
-        terminate_active_download(download.get('pid'))
+        pid = download.get('pid')
+        pids.append(terminate_active_download(pid))
+
+    return pids
