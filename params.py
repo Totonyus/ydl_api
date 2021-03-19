@@ -1,6 +1,6 @@
 api_route = '/download'
 api_route_info = '/info'
-api_route_active_downloads = '/downloading'
+api_route_active_downloads = '/active_downloads'
 
 default_download_format= 'bestvideo+bestaudio/best' #https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#format-selection
 

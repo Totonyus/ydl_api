@@ -11,12 +11,15 @@ This is my very first python program. I did my best. If you are an experienced p
 ### Files
 * `readme.md`
 * `main.py` the main program
+* `ydl_utils.py` utils to make downloading easier
+* `process_utils.py` utils to manage download process 
 * `params.py` all the default parameters of the application, everything is set up to offer you a working application out of the box
 * `hooks.py` youtube-dl hooks handler method. Customize this as you want !
 * `launch.sh` a simple sh file to launch the server
 * `userscript.js` a javascript file you can import in [Greasemonkey (firefox)](https://addons.mozilla.org/fr/firefox/addon/greasemonkey/) or [Tampermonkey (chrome)](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=fr) to access the api from yout browser
 * `ydl_api.service` a systemd service file to launch this application as a daemon
 * An iOS shortcut you can find [here](https://www.icloud.com/shortcuts/a4656b84fb614f3ebce46d8d8c9d0a38)
+* API documentation at the url `http://localhost:5011/docs`
 
 ### Dependencies
 * Installation with distribution package manager (`apt`, `yum`, ...) : `python3`, `python3-pip`, `ffmpeg`
@@ -152,6 +155,26 @@ This means :
 * you can override a preset parameter in your query
 * if a parameter is not present in you preset, the parameter of the default preset will be used (unless the parameter is present il query)
 * If the location is forced for a user, there is no way to change it in the query
+
+#### Manage process
+You can stop active downloads.
+
+Stop all active downloads :
+```
+GET http://localhost:5011/active_downloads/terminate
+```
+
+Stop the active download with it PID. It uses se system PID :
+```
+GET http://localhost:5011/active_downloads/terminate/{pid}
+```
+
+You can get a current download PID by using this route :
+```
+GET http://localhost:5011/active_downloads
+```
+
+This feature is safe : you cannot stop a process wich is not a children of the main process
 
 #### API usage examples
 Only the url is required to use the api.

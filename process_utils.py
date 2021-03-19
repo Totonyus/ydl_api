@@ -3,6 +3,7 @@ import re, os
 import pathlib
 import logging
 
+
 def get_active_downloads_list():
     children_process = psutil.Process().children(recursive=True)
 
@@ -50,6 +51,7 @@ def is_a_child_process(pid):
 
     return is_child
 
+
 def get_child_object(pid):
     children_process = psutil.Process().children(recursive=True)
 
@@ -59,7 +61,10 @@ def get_child_object(pid):
 
     return None
 
+
 def terminate_active_download(pid):
+    logging.info(f'Active download {pid} is being terminated')
+
     child = get_child_object(int(pid))
 
     if child is not None:
@@ -68,9 +73,11 @@ def terminate_active_download(pid):
 
         new_name = f'{filename_info.get("path")}{filename_info.get("filename_stem")}_terminated{filename_info.get("extension")}'
 
-        os.rename(filename_info.get('part_filename'), new_name)
+        os.rename(filename_info.get('part_filename'), new_name)  # renaming file to remove the .part
 
 
 def terminate_all_active_downloads():
+    logging.info('All active downloads are being terminated')
+
     for download in get_active_downloads_list():
         terminate_active_download(download.get('pid'))
