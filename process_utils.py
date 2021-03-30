@@ -12,7 +12,8 @@ def get_active_downloads_list():
         active_download = {
             'command_line': f'{child.cmdline()}',
             'filename': get_current_download_file_destination(child.cmdline()),
-            'pid': child.pid
+            'pid': child.pid,
+            'create_time' : child.create_time()
         }
 
         active_downloads_list.append(active_download)
