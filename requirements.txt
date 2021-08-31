@@ -1,0 +1,4 @@
+fastapi
+youtube-dl
+uvicorn
+psutil

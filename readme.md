@@ -202,3 +202,9 @@ Responses status :
 * 202 : When downloading playlist : not all downloads were checked, some file may not be downloaded by youtube-dl
 * 202 : When using multiple presets : one or more presets is invalid, not all files will be downloaded
 * 400 : No video can be downloaded
+
+### Docker
+
+The parameters files are generated in the params volume on the first launch of the container.
+
+Container on Docker Hub [here](https://hub.docker.com/r/totonyus/ydl_api) 

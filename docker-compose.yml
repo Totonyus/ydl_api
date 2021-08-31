@@ -1,0 +1,10 @@
+version: "3.1"
+services:
+  ydl_api:
+    container_name: totonyus/ydl_api
+    image: ydl_api
+    ports:
+      - 5011:80
+    volumes:
+      - ./downloads:/app/downloads
+      - ./params:/app/params

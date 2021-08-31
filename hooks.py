@@ -12,7 +12,7 @@ You can customize this method as you want
         'is_playlist' : url_properties.get('playlist'),
         'is_video' : url_properties.get('video')
     }
-    
+
     download is the standard youtube-dl object
 """
 def handler(ydl_opts, download):

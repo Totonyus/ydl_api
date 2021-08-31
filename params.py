@@ -1,3 +1,7 @@
+# /!\ Do not modify this if ydl_api runs in docker /!\
+root_download_directory = './downloads'
+# /!\ Do not modify this if ydl_api runs in docker /!\
+
 api_route = '/download'
 api_route_info = '/info'
 api_route_active_downloads = '/active_downloads'
@@ -14,9 +18,9 @@ playlist_detection = [ #used to detect if the url is a video, a playlist or a vi
     {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=', '/user/', '/playlists']} #youtube
 ]
 
-root_download_directory = 'downloads'
 # https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
 # you can use those tags : %hostname%, %location_identifier%, %filename_identifier%, %user_name%
+# /!\ Docker note : you can only set path included in the downloads volume, you can use symlinks /!\
 download_directory_templates={ # you must keep a 'default' preset
     'default' : f'{root_download_directory}/',
     #'dad' : '/home/dad/' # utility example
