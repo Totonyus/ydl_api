@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip3 install youtube-dl --upgrade
+
 if [ ! -f /app/params/params.py ]; then
   cp /app/setup/params.py /app/params/params.py
 fi
