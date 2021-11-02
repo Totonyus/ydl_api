@@ -39,13 +39,22 @@ def define_url_properties(url):
     properties = {'playlist' : False, 'video' : False} # set at the beginning in case params.playlist_detection is empty
 
     for entry in params.playlist_detection:
-        properties = {'playlist' : False, 'video' : False} # reset every loop
+        properties = {'playlist' : False, 'video' : False} # set at the beginning in case params.playlist_detection is empty
 
-        for indicator in entry['video_indicators']:
-            if url.find(indicator) != -1 : properties['video'] = True
+        if entry['hosts'] is not None and urlparse(url).hostname in entry['hosts']:
+            for indicator in entry['video_indicators']:
+                if url.find(indicator) != -1 : properties['video'] = True
 
-        for indicator in entry['playlist_indicators']:
-            if url.find(indicator) != -1 : properties['playlist'] = True
+            for indicator in entry['playlist_indicators']:
+                if url.find(indicator) != -1 : properties['playlist'] = True
+
+            return properties
+        else:
+            for indicator in entry['video_indicators']:
+                if url.find(indicator) != -1 : properties['video'] = True
+
+            for indicator in entry['playlist_indicators']:
+                if url.find(indicator) != -1 : properties['playlist'] = True
 
     return properties
 

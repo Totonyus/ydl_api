@@ -15,7 +15,7 @@ keep_modification_time = False #True =  modified date of the file will be the up
 
 no_playlist = True  #prevent downloading all the playlist when a video url contains playlist id
 playlist_detection = [ #used to detect if the url is a video, a playlist or a video in a playlist
-    {'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=', '/user/', '/playlists']} #youtube
+    {'hosts' : ['www.youtube.com', 'youtu.be'], 'video_indicators': ['/watch?'] , 'playlist_indicators' : ['?list=', '&list=', '/user/', '/playlists']}
 ]
 
 # https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#output-template
