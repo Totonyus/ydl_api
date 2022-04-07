@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip3 install youtube-dl --upgrade
+pip3 install yt-dlp --upgrade
 
 if [ ! -f /app/params/params.py ]; then
   cp /app/setup/params.py /app/params/params.py

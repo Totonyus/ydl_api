@@ -1,6 +1,7 @@
-import logging, params, youtube_dl, re
+import logging, params, re
 from urllib.parse import urlparse, unquote
 import hooks, functools
+import yt_dlp as youtube_dl
 
 """
     Check if all requested presets are available
@@ -193,3 +194,4 @@ def find_associated_user(token):
         if user.get('token') == token:
             return user
     return None
+

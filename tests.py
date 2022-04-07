@@ -1,6 +1,6 @@
 import unittest
 import ydl_utils
-import youtube_dl
+import yt_dlp as youtube_dl
 
 class Tests(unittest.TestCase):
     def test_ydl_version(self):

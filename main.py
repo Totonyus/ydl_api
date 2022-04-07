@@ -1,6 +1,7 @@
-import logging, ydl_utils, params, youtube_dl, process_utils
+import logging, ydl_utils, params, process_utils
 from urllib.parse import urlparse, unquote
 from fastapi import BackgroundTasks, FastAPI, Response
+import yt_dlp as youtube_dl
 
 app = FastAPI()
 
