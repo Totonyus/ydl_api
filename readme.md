@@ -1,3 +1,6 @@
+# Important update
+youtube-dlp is now used instead of youtube-dl
+
 # Simple youtube-dl rest API (ydl_api)
 
 ### Exhaustive list of the ydl_api features
@@ -23,13 +26,13 @@ This is my very first python program. I did my best. If you are an experienced p
 
 ### Dependencies
 * Installation with distribution package manager (`apt`, `yum`, ...) : `python3`, `python3-pip`, `ffmpeg`
-* Installation with pip3 : `fastapi`, `uvicorn`, `youtube-dl`
+* Installation with pip3 : `fastapi`, `uvicorn`, `yt-dlp`
 
 ```
-pip3 install fastapi youtube-dl uvicorn --upgrade
+pip3 install fastapi yt-dlp uvicorn --upgrade
 ``` 
 
-* Make sure you have the last youtube-dl version installed : `youtube-dl --version` (currently `2020.11.1.1`). You could have problems with some videos if you use an older version.
+* Make sure you have the last youtube-dl version installed : `yt-dlp --version` (currently `2022.03.08.2`). You could have problems with some videos if you use an older version.
 
 ### Installation
 #### Download this repo
